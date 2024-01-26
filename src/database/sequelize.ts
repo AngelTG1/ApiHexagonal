@@ -1,4 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
+import mysql from 'mysql2/promise'
 
 import UserModel from "../user/infraestructure/model/userModel";
 
