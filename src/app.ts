@@ -3,12 +3,14 @@ import { Signale } from 'signale';
 
 import { initializeDatabase } from './database/sequelize'; 
 import { userRouter } from './user/infraestructure/userRouter';
+import { productRouter } from './product/infraestructure/productRouter';
 
 const app = express();
 const signale = new Signale();
 
 app.use(express.json());
 app.use('/user',userRouter);
+app.use('/product', productRouter)
 
 async function startServer() {
     try {

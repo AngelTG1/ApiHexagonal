@@ -6,16 +6,18 @@ export class AdduserController{
 
     async run (req: Request, res: Response){
         try{
-            let {name, last_name}= req.body; // cambia
+            let {name, last_name, email, password}= req.body; // cambia
 
-            let createduser = await this.addUserUsecase.run(name, last_name);
+            let createduser = await this.addUserUsecase.run(name, last_name, email, password);
 
             if (createduser) {
                 return res.status(200).send({
                     status: "success",
                     data:{
                         name: createduser.name,
-                        last_name: createduser.last_name
+                        last_name: createduser.last_name,
+                        email: createduser.email,
+                        password: createduser.password
                     },
                     message: "User Creado"
                 })

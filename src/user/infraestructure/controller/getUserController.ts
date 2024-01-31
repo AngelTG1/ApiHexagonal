@@ -18,6 +18,8 @@ export class GetUserController {
                             id: user.id,
                             name: user.name,
                             last_name: user.last_name,
+                            email: user.email,
+                            password: user.password
                         }
                     })
                 })

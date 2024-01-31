@@ -1,9 +1,9 @@
 import { Model, DataType, Table, Column } from 'sequelize-typescript';
 @Table({
-    tableName: 'users',
+    tableName: 'products',
     timestamps: true 
 })
-class UserModel extends Model {
+class ProductModel extends Model {
     
     @Column({
         type: DataType.INTEGER.UNSIGNED,
@@ -22,19 +22,14 @@ class UserModel extends Model {
         type: DataType.STRING(128),
         allowNull: false
     })
-    public last_name!: string;
+    public description!: string;
 
     @Column({
         type: DataType.STRING(128),
         allowNull: false
     })
-    public email!: string;
+    public price! : string;
 
-    @Column({
-        type: DataType.STRING(128),
-        allowNull: false
-    })
-    public password!: string;
 }
 
-export default UserModel;
+export default ProductModel;
