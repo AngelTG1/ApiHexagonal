@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 // import mysql from 'mysql2/promise'
 
-// import UserModel from "../user/infraestructure/model/userModel";
+import UserModel from "../user/infraestructure/model/userModel";
 import ProductModel from '../product/infraestructure/model/productModel';
 
 export const sequelize = new Sequelize({
@@ -11,7 +11,7 @@ export const sequelize = new Sequelize({
     username: 'Angel',
     password: '1980',
     port: 3306,
-    models: [ProductModel],
+    models: [UserModel, ProductModel],
 });
 
 export async function initializeDatabase() {

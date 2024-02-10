@@ -1,18 +1,27 @@
 import { MysqlUserRepository } from "./mysqlUserRepository";
-
 import { AddUserUseCase } from "../aplication/addUserUseCase";
 import { AdduserController } from "./controller/addUserController";
-
 import { GetUserUseCase } from "../aplication/getUserUseCase";
 import { GetUserController } from "./controller/getUserController";
+import { BcryptHashService } from "../services/bcryptHashService"; 
 
-export const mysqlUserRepository = new MysqlUserRepository();
+// Crear instancias de servicios y repositorios
+const hashService = new BcryptHashService();
+const mysqlUserRepository = new MysqlUserRepository(hashService);
 
-export const addUserUseCase = new AddUserUseCase(mysqlUserRepository);
+// Crear instancias de casos de uso y controladorers
+const addUserUseCase = new AddUserUseCase(mysqlUserRepository);
+const addUserController = new AdduserController(addUserUseCase);
 
-export const addUserController = new AdduserController(addUserUseCase);
+const getUserUseCase = new GetUserUseCase(mysqlUserRepository);
+const getUserController = new GetUserController(getUserUseCase);
 
 
-export const getUserUseCase = new GetUserUseCase(mysqlUserRepository);
-
-export const getUserController = new GetUserController(getUserUseCase);
+export {
+  hashService,
+  mysqlUserRepository,
+  addUserUseCase,
+  addUserController,
+  getUserUseCase,
+  getUserController,
+};

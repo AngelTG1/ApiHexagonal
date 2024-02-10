@@ -5,20 +5,22 @@ import { initializeDatabase } from './database/sequelize';
 import { userRouter } from './user/infraestructure/userRouter';
 import { productRouter } from './product/infraestructure/productRouter';
 
+import cors from 'cors';
+
 const app = express();
 const signale = new Signale();
 
+app.use(cors());
 app.use(express.json());
-app.use('/user',userRouter);
-app.use('/product', productRouter)
+app.use('/user', userRouter);
+app.use('/product', productRouter);
 
 async function startServer() {
     try {
-
-        // Luego inicializa y conecta la base de datos
+        // Initialize and connect to the database
         await initializeDatabase();
         
-        // Después inicia el servidor Express
+        // Start the Express server
         app.listen(3000, () => {
             signale.success("Server online in port 3000");
         });
@@ -27,5 +29,5 @@ async function startServer() {
     }
 }
 
-// Inicia todo
+// Start the server
 startServer();
