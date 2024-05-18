@@ -12,6 +12,7 @@ class UserModel extends Model {
     })
     public id!: number;
     
+    
     @Column({
         type: DataType.STRING(128),
         allowNull: false
@@ -23,18 +24,6 @@ class UserModel extends Model {
         allowNull: false
     })
     public last_name!: string;
-
-    @Column({
-        type: DataType.STRING(128),
-        allowNull: false
-    })
-    public email!: string;
-
-    @Column({
-        type: DataType.STRING(128),
-        allowNull: false
-    })
-    public password!: string;
 }
 
 export default UserModel;

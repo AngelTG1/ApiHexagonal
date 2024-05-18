@@ -2,25 +2,21 @@ import express from 'express';
 import { Signale } from 'signale';
 
 import { initializeDatabase } from './database/sequelize'; 
-import { userRouter } from './user/infraestructure/userRouter';
-import { productRouter } from './product/infraestructure/productRouter';
-
-import cors from 'cors';
+import { userRouter } from './users/infraestructure/userRouter';
 
 const app = express();
 const signale = new Signale();
 
-app.use(cors());
 app.use(express.json());
 app.use('/user', userRouter);
-app.use('/product', productRouter);
 
 async function startServer() {
     try {
-        // Initialize and connect to the database
+
+        // Luego inicializa y conecta la base de datos
         await initializeDatabase();
         
-        // Start the Express server
+        // Después inicia el servidor Express
         app.listen(3000, () => {
             signale.success("Server online in port 3000");
         });
@@ -29,5 +25,5 @@ async function startServer() {
     }
 }
 
-// Start the server
+
 startServer();
