@@ -8,7 +8,7 @@ export class MysqlUserRepository implements UserRepository{
     async getAll(): Promise<User[]> {
         try {
             const allUsers = await UserModel.findAll();
-            const users = allUsers.map(user => new User(user.id, user.name, user.last_name));
+            const users = allUsers.map(user => new User(user.id, user.name, user.email));
 
             return users;
         } catch (error) {
@@ -17,10 +17,10 @@ export class MysqlUserRepository implements UserRepository{
         }
     }
 
-    async addUser(name: string, last_name: string): Promise<User | null> {
+    async addUser(name: string, email: string): Promise<User | null> {
         try{
-            const createdUser = await UserModel.create({name, last_name});
-            return new User(createdUser.id, createdUser.name, createdUser.last_name);
+            const createdUser = await UserModel.create({name, email});
+            return new User(createdUser.id, createdUser.name, createdUser.email);
         }catch(error){
             console.error("Error In Psql", error)
             return null;

@@ -23,7 +23,7 @@ class UserModel extends Model {
         type: DataType.STRING(128),
         allowNull: false
     })
-    public last_name!: string;
+    public email!: string;
 }
 
 export default UserModel;
