@@ -21,7 +21,11 @@ class UserModel extends Model {
 
     @Column({
         type: DataType.STRING(128),
-        allowNull: false
+        allowNull: false,
+        unique: true,
+        validate: {
+            isEmail: true
+        }
     })
     public email!: string;
 }

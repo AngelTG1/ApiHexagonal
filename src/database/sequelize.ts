@@ -1,6 +1,7 @@
 import { Sequelize } from 'sequelize-typescript';
 
 import UserModel from "../users/infraestructure/model/userModel";
+import EventMondel from '../events/infraestructure/model/eventModel';
 
 
 export const sequelize = new Sequelize({
@@ -10,7 +11,7 @@ export const sequelize = new Sequelize({
     username: 'Angel',
     password: '1980',
     port: 3306,
-    models: [UserModel],
+    models: [UserModel, EventMondel],
 });
 
 export async function initializeDatabase() {

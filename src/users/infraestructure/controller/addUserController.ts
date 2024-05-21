@@ -6,16 +6,17 @@ export class AdduserController{
 
     async run (req: Request, res: Response){
         try{
-            let {name, email}= req.body; // cambia
+            let {name, email}= req.body; 
 
             let createduser = await this.addUserUsecase.run(name, email);
 
             if (createduser) {
-                return res.status(200).send({
+                return res.status(201).send({
                     status: "success",
                     data:{
+                        id: createduser.id,
                         name: createduser.name,
-                        last_name: createduser.email
+                        email: createduser.email
                     },
                     message: "User Creado"
                 })
@@ -29,10 +30,11 @@ export class AdduserController{
             }
         }catch(error){
             console.error("Error In Controller", error);
-            res.status(500).send({
+            res.status(404).send({
                 status: "error",
                 Message: "Error In Server"
             });
         }
     }
 }
+

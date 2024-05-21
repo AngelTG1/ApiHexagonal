@@ -17,7 +17,7 @@ export class GetUserController {
                         return {
                             id: user.id,
                             name: user.name,
-                            last_name: user.last_name,
+                            email: user.email,
                         }
                     })
                 })
@@ -28,7 +28,7 @@ export class GetUserController {
                     msn: "Ocurrio algún problema",
                 });       
         } catch (error) {
-            res.status(204).send({
+            res.status(404).send({
                 status: "error",
                 data: "Ocurrio un error",
                 msn: error,

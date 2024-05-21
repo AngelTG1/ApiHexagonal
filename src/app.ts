@@ -3,12 +3,14 @@ import { Signale } from 'signale';
 
 import { initializeDatabase } from './database/sequelize'; 
 import { userRouter } from './users/infraestructure/userRouter';
+import { eventRouter } from './events/infraestructure/userRouter';
 
 const app = express();
 const signale = new Signale();
 
 app.use(express.json());
-app.use('/user', userRouter);
+app.use('/users', userRouter);
+app.use('/events', eventRouter);
 
 async function startServer() {
     try {
@@ -21,9 +23,8 @@ async function startServer() {
             signale.success("Server online in port 3000");
         });
     } catch (error) {
-        signale.error("Error al iniciar el servidor:", error);
+        signale.error("Error al iniciar el servidor: ", error);
     }
 }
-
 
 startServer();
