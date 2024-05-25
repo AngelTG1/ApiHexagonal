@@ -9,8 +9,9 @@ eventRouter.post(
 );
 
 eventRouter.get(
-    "/:categoria/:fecha/:ubucacion",addEventController.run.bind(addEventController)
-);  
+    "/:userId",addEventController.getEventsByUserId.bind(addEventController)
+);
+
 
 
 

@@ -6,9 +6,9 @@ export class AdduserController{
 
     async run (req: Request, res: Response){
         try{
-            let {name, email}= req.body; 
+            let {name, email, password}= req.body; 
 
-            let createduser = await this.addUserUsecase.run(name, email);
+            let createduser = await this.addUserUsecase.run(name, email, password);
 
             if (createduser) {
                 return res.status(201).send({
@@ -16,7 +16,8 @@ export class AdduserController{
                     data:{
                         id: createduser.id,
                         name: createduser.name,
-                        email: createduser.email
+                        email: createduser.email,
+                        password: createduser.password
                     },
                     message: "User Creado"
                 })
