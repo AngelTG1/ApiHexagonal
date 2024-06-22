@@ -1,11 +1,7 @@
 export class Event {
-  constructor(
-    readonly id: number,
-    readonly name: string,
-    readonly description: string,
-    readonly date: Date,
-    readonly hour: string,
-    readonly location: string,
-    readonly userId: number,
-  ) {}
+  constructor(public name: string, public status: number = 0) {}
+
+  toggle() {
+    this.status = this.status === 0 ? 1 : 0;
+  }
 }

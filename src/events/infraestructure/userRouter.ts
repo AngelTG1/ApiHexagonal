@@ -1,18 +1,9 @@
-import express from "express"
+import express from 'express'
 
-import { addEventController } from "./dependencies"
+import { eventController } from './dependencies'
 
 export const eventRouter = express.Router();
 
-eventRouter.post(
-    "/",addEventController.run.bind(addEventController)
-);
+eventRouter.get('/status', eventController.getAllEventsStatus.bind(eventController))
+eventRouter.post('/event/:event', eventController.toggleEventStatus.bind(eventController))
 
-eventRouter.get(
-    "/:userId",addEventController.getEventsByUserId.bind(addEventController)
-);
-
-
-
-
-// localhost:3000/events/1/2021-10-10/suchiapa

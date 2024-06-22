@@ -4,8 +4,8 @@ import { Signale } from 'signale';
 // import { initializeDatabase } from './database/sequelize'; 
 import { query } from './database/db';
 import { userRouter } from './users/infraestructure/userRouter';
-import { eventRouter } from './events/infraestructure/userRouter';
 import { authRouter } from './auth/intraestructure/authRouter';
+import { eventRouter } from './events/infraestructure/userRouter';
 
 
 const app = express();
@@ -13,8 +13,8 @@ const signale = new Signale();
 
 app.use(express.json());
 app.use('/users', userRouter);
-app.use('/events', eventRouter);
 app.use('/auth', authRouter);
+app.use('/v1', eventRouter)
 
 
 
