@@ -1,24 +1,37 @@
 import { Event } from "../domain/event";
 import { EventRepository } from "../domain/eventRepository";
+import { RabbitMQ } from "../infraestructure/RabbitMQ";
 
 export class EventUseCase {
-    constructor(private eventRepository: EventRepository){}
+  private rabbitMQ: RabbitMQ;
 
-    async getEventStatus(name: string): Promise<Event | undefined> {
-        return this.eventRepository.getEvent(name);
-    }
+  constructor(private eventRepository: EventRepository) {
+    this.rabbitMQ = new RabbitMQ();
+    this.rabbitMQ.connect();
+  }
 
-    async toggleEventStatus(name: string): Promise<Event | undefined> {
-        const event = await this.eventRepository.getEvent(name);
-        if(event) {
-            event.toggle();
-            await this.eventRepository.saveEvent(event);
-        }
-        return event;
-    }
+  async getEventStatus(name: string): Promise<Event | undefined> {
+    return this.eventRepository.getEvent(name);
+  }
 
-    async getAllEventsStatus(): Promise<Event[]>{
-        const events = await this.eventRepository.getAllEvents();
-        return Object.values(events);
+  async toggleEventStatus(name: string): Promise<Event | undefined> {
+    const event = await this.eventRepository.getEvent(name);
+    if (event) {
+      event.status = event.status === 1 ? 0 : 1;
+      await this.eventRepository.saveEvent(event);
+      await this.rabbitMQ.sendMessage("device-status-changed", {
+        name: event.name,
+        status: event.status,
+      });
+      console.log(
+        `Message sent to RabbitMQ: { name: ${event.name}, status: ${event.status} }`
+      );
     }
+    return event;
+  }
+
+  async getAllEventsStatus(): Promise<Event[]> {
+    const events = await this.eventRepository.getAllEvents();
+    return Object.values(events);
+  }
 }
