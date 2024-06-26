@@ -35,7 +35,12 @@ export class RabbitMQ {
       throw new Error('Channel is not initialized');
     }
     try {
-      this.channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)), { persistent: true });
+      const bufferMessage = Buffer.from(JSON.stringify(message));
+      const sent = this.channel.sendToQueue(queueName, bufferMessage, { persistent: true });
+      if (!sent) {
+        console.error(`Failed to send message to queue ${queueName}: Queue is full or not ready.`);
+        throw new Error(`Failed to send message to queue ${queueName}`);
+      }
       console.log(`Message sent to queue ${queueName}:`, message);
     } catch (error) {
       console.error(`Failed to send message to queue ${queueName}:`, error);
@@ -68,10 +73,18 @@ export class RabbitMQ {
     }
   }
 
-  close() {
-    if (this.connection) {
-      this.connection.close();
-      console.log('Connection to RabbitMQ closed');
+  async close() {
+    try {
+      if (this.channel) {
+        await this.channel.close();
+        console.log('RabbitMQ channel closed');
+      }
+      if (this.connection) {
+        await this.connection.close();
+        console.log('RabbitMQ connection closed');
+      }
+    } catch (error) {
+      console.error('Failed to close RabbitMQ connection:', error);
     }
   }
 }

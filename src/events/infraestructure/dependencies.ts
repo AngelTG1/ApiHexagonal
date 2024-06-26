@@ -1,9 +1,13 @@
 import { MysqlEventRepository } from "./mysqlEventRepository";
 import { EventUseCase } from "../aplication/eventUseCase";
 import { EventController } from "./controller/eventController";
+import { EmailService } from "./helpers/EmailService";
 
-export const mysqlEventRepository = new MysqlEventRepository()
+const mysqlEventRepository = new MysqlEventRepository();
+const emailService: EmailService = new EmailService(); 
 
-export const eventUseCase = new EventUseCase(mysqlEventRepository);
+const eventUseCase = new EventUseCase(mysqlEventRepository, emailService);
 
-export const eventController = new EventController(eventUseCase);
+const eventController = new EventController(eventUseCase);
+
+export { eventController, eventUseCase, mysqlEventRepository, emailService };
